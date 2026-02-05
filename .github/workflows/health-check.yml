@@ -22,6 +22,10 @@ jobs:
           else
             echo "✅ Disk usage is within safe limits."
           fi
+          echo "=== SERVER HEALTH REPORT ===" > report.txt
+          echo "Disk usage: ${DISK_USAGE}%" >> report.txt
+          echo "Checked at: $(date)" >> report.txt
+
 
       - name: Upload health report
         uses: actions/upload-artifact@v4
