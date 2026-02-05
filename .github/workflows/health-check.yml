@@ -1,0 +1,29 @@
+name: Server Health Check
+
+on:
+  push:
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate system health report
+        run: |
+          echo "=== DISK USAGE ===" > report.txt
+          df -h >> report.txt
+          echo "" >> report.txt
+          echo "=== MEMORY USAGE ===" >> report.txt
+          free -m >> report.txt
+          echo "" >> report.txt
+          echo "=== CPU LOAD ===" >> report.txt
+          uptime >> report.txt
+
+      - name: Upload health report
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-health-report
+          path: report.txt
